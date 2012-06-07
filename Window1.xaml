@@ -1,7 +1,0 @@
-﻿<Window x:Class="WpfSample10.Window1"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Window1" Height="367" Width="524"
-        FontSize="15" FontStyle="Italic">
-		<Image Name="SlimDXImage" SizeChanged="SlimDXImage_SizeChanged" />
-</Window>

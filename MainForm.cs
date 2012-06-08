@@ -118,5 +118,14 @@ namespace PhotoWeasel {
 
 			m_SwapChain.Present(1, PresentFlags.None);
 		}
+
+		private void splitContainer1_Panel2_Resize(object sender, EventArgs e) {
+			if (m_D3DDevice != null) {
+				m_SwapChain.ResizeBuffers(2, splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, Format.R8G8B8A8_UNorm, SwapChainFlags.None);
+				m_SwapChain.ResizeTarget(new ModeDescription(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm));
+				Viewport viewport = new Viewport(0, 0, splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, 0, 1);
+				m_D3DDevice.Rasterizer.SetViewports(viewport);
+			}
+		}
 	}
 }

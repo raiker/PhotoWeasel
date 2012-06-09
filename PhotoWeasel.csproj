@@ -95,7 +95,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hibernate.cfg.xml" />
+    <Content Include="hibernate.cfg.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="IMG_4788.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

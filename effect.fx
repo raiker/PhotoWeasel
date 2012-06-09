@@ -4,11 +4,13 @@ matrix Projection;
 
 Texture2D tex2D;
 
+float AspectRatio;
+
 SamplerState linearSampler
 {
     Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
+    AddressU = Clamp;
+    AddressV = Clamp;
 };
 
 struct PS_INPUT
@@ -32,7 +34,21 @@ PS_INPUT VS( float4 Pos : POSITION, float2 TexCoord : TEXCOORD )
 
 float4 PS( PS_INPUT psInput ) : SV_Target
 {
-    return tex2D.Sample( linearSampler, psInput.TexCoord );
+	float2 newcoords = psInput.TexCoord;
+
+	if (AspectRatio > 1){
+		newcoords.y = AspectRatio * (newcoords.y - 0.5) + 0.5;
+	} else {
+		newcoords.x = (newcoords.x - 0.5) / AspectRatio + 0.5;
+	}
+
+	float4 sample = tex2D.Sample(linearSampler, newcoords);
+
+	if (newcoords.x < 0 || newcoords.y < 0 || newcoords.x > 1 || newcoords.y > 1){
+		return float4(1, 1, 1, 1);
+	} else {
+		return sample;
+	}
 }
 
 technique10 Render

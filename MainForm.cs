@@ -20,10 +20,13 @@ namespace PhotoWeasel {
 		SlimDX.Direct3D10.Buffer m_Vertices;
 		Texture2D m_Tex;
 
+		ScrollableControl m_Window;
+
 		const int InputStride = 24;
 
 		public MainForm() {
 			InitializeComponent();
+			m_Window = splitContainer1.Panel2;
 			InitD3D();
 			SlimDX.Windows.MessagePump.Run(this, Render);
 		}
@@ -32,10 +35,10 @@ namespace PhotoWeasel {
 			{
 				SwapChainDescription swap_chain_desc = new SwapChainDescription();
 				swap_chain_desc.BufferCount = 2;
-				swap_chain_desc.OutputHandle = splitContainer1.Panel2.Handle;
+				swap_chain_desc.OutputHandle = m_Window.Handle;
 				swap_chain_desc.IsWindowed = true;
 
-				swap_chain_desc.ModeDescription = new ModeDescription(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm);
+				swap_chain_desc.ModeDescription = new ModeDescription(m_Window.Width, m_Window.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm);
 
 				swap_chain_desc.SampleDescription = new SampleDescription(1, 0);
 				swap_chain_desc.SwapEffect = SwapEffect.Discard;
@@ -45,7 +48,7 @@ namespace PhotoWeasel {
 					throw new Exception("Bad stuff happened");
 				}
 
-				m_D3DDevice.Factory.SetWindowAssociation(splitContainer1.Panel2.Handle, WindowAssociationFlags.IgnoreAll);
+				m_D3DDevice.Factory.SetWindowAssociation(m_Window.Handle, WindowAssociationFlags.IgnoreAll);
 			}
 
 			using (Texture2D back_buffer = Texture2D.FromSwapChain<Texture2D>(m_SwapChain, 0)) {
@@ -55,7 +58,7 @@ namespace PhotoWeasel {
 			}
 
 			{
-				Viewport viewport = new Viewport(0, 0, splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, 0, 1);
+				Viewport viewport = new Viewport(0, 0, m_Window.Width, m_Window.Height, 0, 1);
 				m_D3DDevice.Rasterizer.SetViewports(viewport);
 			}
 
@@ -71,8 +74,8 @@ namespace PhotoWeasel {
 				for (int i = 0; i < 4; i++) {
 					float x = (i % 2 == 0) ? -0.5f : 0.5f;
 					float y = (i / 2 == 0) ? -0.5f : 0.5f;
-					stream.Write(new Vector4(x, 0.5f, y, 1.0f));
-					stream.Write(new Vector2(0.5f - x, 0.5f - y));
+					stream.Write(new Vector4(x, 0.0f, y, 1.0f));
+					stream.Write(new Vector2(0.5f - x * 1.03f, 0.5f - y * 1.03f));
 				}
 
 				stream.Position = 0;
@@ -102,15 +105,16 @@ namespace PhotoWeasel {
 					//new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0),
 				});
 
-				m_Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Identity);
+				m_Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Scaling(512, 0, 512));
 				m_Effect.GetVariableByName("View").AsMatrix().SetMatrix(Matrix.LookAtLH(new Vector3(0, -4, 0), new Vector3(0, 0, 0), Vector3.UnitZ));
-				m_Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(Matrix.OrthoLH(4, 4, 1, 10));
+				m_Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(Matrix.OrthoLH(m_Window.Width, m_Window.Height, 1, 10));
 
 				m_D3DDevice.InputAssembler.SetInputLayout(layout);
 
 				ShaderResourceView resource_view = new ShaderResourceView(m_D3DDevice, m_Tex);
 
 				m_Effect.GetVariableByName("tex2D").AsResource().SetResource(resource_view);
+				m_Effect.GetVariableByName("AspectRatio").AsScalar().Set((float)m_Tex.Description.Width / m_Tex.Description.Height);
 
 				pass.Apply();
 				m_D3DDevice.Draw(4, 0);
@@ -121,9 +125,9 @@ namespace PhotoWeasel {
 
 		private void splitContainer1_Panel2_Resize(object sender, EventArgs e) {
 			if (m_D3DDevice != null) {
-				m_SwapChain.ResizeBuffers(2, splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, Format.R8G8B8A8_UNorm, SwapChainFlags.None);
-				m_SwapChain.ResizeTarget(new ModeDescription(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm));
-				Viewport viewport = new Viewport(0, 0, splitContainer1.Panel2.Width, splitContainer1.Panel2.Height, 0, 1);
+				m_SwapChain.ResizeBuffers(2, m_Window.Width, m_Window.Height, Format.R8G8B8A8_UNorm, SwapChainFlags.None);
+				m_SwapChain.ResizeTarget(new ModeDescription(m_Window.Width, m_Window.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm));
+				Viewport viewport = new Viewport(0, 0, m_Window.Width, m_Window.Height, 0, 1);
 				m_D3DDevice.Rasterizer.SetViewports(viewport);
 			}
 		}

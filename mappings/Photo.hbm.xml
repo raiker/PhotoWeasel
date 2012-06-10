@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 									 assembly="PhotoWeasel"
-									 namespace="PhotoWeasel.Domain">
+									 namespace="PhotoWeasel.domain">
 	<class name="Photo">
-		<id name="ID" />
+    <id name="ID">
+      <generator class="guid" />
+    </id>
 		<property name="Title" />
 		<property name="Description" />
 		<property name="Date" />
+    <property name="Thumbnail" />
 		<property name="Image" />
 	</class>
 </hibernate-mapping>

@@ -10,5 +10,6 @@ namespace PhotoWeasel.domain {
 		public string Description { get; set; }
 		public DateTime Date { get; set; }
 		public byte[] Image { get; set; }
+        public byte[] Thumbnail { get; set; }
 	}
 }

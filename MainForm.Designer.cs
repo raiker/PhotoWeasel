@@ -36,19 +36,23 @@
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.splitContainer1_Panel2_MouseDoubleClick);
 			this.splitContainer1.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
-			this.splitContainer1.Size = new System.Drawing.Size(1391, 952);
-			this.splitContainer1.SplitterDistance = 252;
+			this.splitContainer1.Size = new System.Drawing.Size(1267, 676);
+			this.splitContainer1.SplitterDistance = 227;
 			this.splitContainer1.TabIndex = 0;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1391, 952);
+			this.ClientSize = new System.Drawing.Size(1267, 676);
 			this.Controls.Add(this.splitContainer1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "Form1";
+			this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseWheel);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.ResumeLayout(false);

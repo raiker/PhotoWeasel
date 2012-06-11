@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoWeasel", "PhotoWeasel.csproj", "{14EBE3D7-439E-47BF-8AA6-654EF4242E9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoWeasel", "PhotoWeasel\PhotoWeasel.csproj", "{14EBE3D7-439E-47BF-8AA6-654EF4242E9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWDBTest", "..\PWDBTest\PWDBTest.csproj", "{A67F1C16-23E3-401F-A440-8B869689DAE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWDBTest", "PWDBTest\PWDBTest.csproj", "{A67F1C16-23E3-401F-A440-8B869689DAE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

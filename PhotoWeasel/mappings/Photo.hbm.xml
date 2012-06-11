@@ -2,14 +2,14 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 									 assembly="PhotoWeasel"
 									 namespace="PhotoWeasel.domain">
-	<class name="Photo">
+  <class name="Photo">
     <id name="ID">
       <generator class="guid" />
     </id>
-		<property name="Title" />
-		<property name="Description" />
-		<property name="Date" />
+    <property name="Title" />
+    <property name="Description" />
+    <property name="Date" />
     <property name="Thumbnail" />
-		<property name="Image" />
-	</class>
+    <property name="Image" />
+  </class>
 </hibernate-mapping>

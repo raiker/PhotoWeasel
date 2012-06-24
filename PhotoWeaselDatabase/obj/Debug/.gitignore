@@ -1,0 +1,7 @@
+
+*.cache
+*.tlog
+*.resources
+*.txt
+*.dll
+*.pdb

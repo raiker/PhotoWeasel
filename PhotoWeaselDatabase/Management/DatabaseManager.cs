@@ -14,8 +14,6 @@ namespace PhotoWeaselDatabase.Management
     {
         public static Database CreatePWDB(string location)
         {
-            throw new NotImplementedException();
-            /*
             //Delete file first if it already exists
             try
             {
@@ -27,18 +25,15 @@ namespace PhotoWeaselDatabase.Management
 
             //produce the connection string and open DB
             string conStr = GetConnectionString(location);
-            SQLiteConnection connection = OpenPWDB(conStr);
-
+            Database db = OpenPWDB(conStr);
             //Create tables
-
-
-            return connection;
-             * */
+            db.CreateTables();
+            return db;
         }
 
         public static Database OpenPWDB(string connectionString)
         {
-            throw new NotImplementedException();
+            return new Database(connectionString);
         }
 
         public static string GetConnectionString(string dbfile, string conStringName = "Default")

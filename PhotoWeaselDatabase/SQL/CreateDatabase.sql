@@ -1,19 +1,19 @@
 ﻿CREATE TABLE Photos
 (
 	Id				INTEGER PRIMARY KEY ASC AUTOINCREMENT,
-	ThumbnailPath	BLOB NOT NULL,
+	Thumbnail		BLOB NOT NULL,
 	Histogram		BLOB NOT NULL,
 	ImageFile		VARCHAR NOT NULL,
 	Title			NCHAR,
 	Description		VARCHAR,
-	Date			DATETIME,
+	Date			DATETIME
 );
 
 CREATE TABLE Tags
 (
 	Id				INTEGER PRIMARY KEY ASC AUTOINCREMENT,
 	Name			VARCHAR NOT NULL,
-	Description		VARCHAR,
+	Description		VARCHAR
 );
 
 CREATE TABLE KeyValueMetadata

@@ -4,8 +4,8 @@ using System;
 
 namespace PhotoWeasalDatabaseTests
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for DatabaseTest and is intended
     ///to contain all DatabaseTest Unit Tests
@@ -23,17 +23,12 @@ namespace PhotoWeasalDatabaseTests
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get { return testContextInstance; }
+            set { testContextInstance = value; }
         }
 
         #region Additional test attributes
+
         // 
         //You can use the following additional attributes as you write your tests:
         //
@@ -61,6 +56,7 @@ namespace PhotoWeasalDatabaseTests
         //{
         //}
         //
+
         #endregion
 
 
@@ -74,14 +70,14 @@ namespace PhotoWeasalDatabaseTests
         public void GetSQLResourceTest()
         {
             string expected = "Test Resource";
-            
+
             string actual = Database_Accessor.GetSQLResource("PhotoWeaselDatabase.SQL.TestResource.txt");
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(DatabaseConfigurationException))]
+        [ExpectedException(typeof (DatabaseConfigurationException))]
         public void GetSQLResourceFailTest()
         {
             Database_Accessor.GetSQLResource("IDoNotExist");

@@ -1,4 +1,6 @@
-﻿using System.Data.SQLite;
+﻿using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Linq;
 using PhotoWeaselDatabase.Management;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -101,5 +103,40 @@ namespace PhotoWeasalDatabaseTests
             DatabaseManager.GetConnectionString("foo.s3b", "Unknown");
         }
 
+
+        /// <summary>
+        ///A test for CreatePWDB
+        ///</summary>
+        [TestMethod()]
+        public void CreatePWDBTest()
+        {
+            var database = DatabaseManager.CreatePWDB("EmptyTest.s3b");
+            
+            //we need to inspect the contents of this database
+            string statement = "SELECT name FROM sqlite_master WHERE type='table' AND NOT (name='sqlite_sequence');";
+            string conStr = DatabaseManager.GetConnectionString("EmptyTest.s3b");
+            var con = new SQLiteConnection(conStr);
+            con.Open();
+            var command = new SQLiteCommand(statement, con);
+            var results = command.ExecuteReader();
+
+            var expectedTables = new List<string>()
+                                     {
+                                         "Photos",
+                                         "Tags",
+                                         "KeyValueMetadata",
+                                         "Join_Tags_Photos"
+                                     };
+            var foundTables = new List<string>();
+            while (results.Read())
+            {
+                foundTables.Add(results.GetString(0));
+            }
+
+            foreach (var table in expectedTables)
+            {
+                Assert.IsTrue(foundTables.Contains(table));
+            }
+        }
     }
 }

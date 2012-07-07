@@ -22,6 +22,7 @@ namespace PhotoWeaselDatabase.Management
         {
             //Open a database using the supplied connection string
             connection = new SQLiteConnection(connectionString);
+            connection.Open();
 
             //Prepare statements using sql files in resources
             preparedStatements = new Dictionary<DatabaseSQLStatements, SQLiteCommand>();
